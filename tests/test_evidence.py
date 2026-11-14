@@ -5,6 +5,7 @@ from ir_evidence.bundle import verify_manifest, write_jsonl, write_manifest
 from ir_evidence.collectors import load_jsonl
 from ir_evidence.redact import redact_record
 from ir_evidence.timeline import timeline
+from ir_evidence.report import write_html
 
 class EvidenceTests(unittest.TestCase):
     def test_timeline_and_redaction(self):
@@ -17,5 +18,9 @@ class EvidenceTests(unittest.TestCase):
             (root / "evidence.jsonl").write_text("changed", encoding="utf-8"); self.assertEqual(verify_manifest(root), ["evidence.jsonl"])
     def test_fixtures_are_text_only(self):
         self.assertTrue(all(path.suffix == ".jsonl" for path in (ROOT / "fixtures").iterdir()))
+    def test_html_escapes_evidence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "report.html"; write_html(target, [{"record_type":"fixture","data":"<script>"}])
+            self.assertNotIn("<script>", target.read_text(encoding="utf-8"))
 
 if __name__ == "__main__": unittest.main()
