@@ -1,0 +1,2 @@
+{"timestamp":"2026-01-02T03:05:00Z","source":"synthetic","record_type":"process","image":"notepad.exe","pid":1200,"path":"C:\\Users\\Example\\notes.txt","remote_ip":"192.0.2.10"}
+{"timestamp":"2026-01-02T03:04:00Z","source":"synthetic","record_type":"service","name":"ExampleService","state":"stopped"}
